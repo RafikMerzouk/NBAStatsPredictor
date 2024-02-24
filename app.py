@@ -44,4 +44,7 @@ for player in current_players:
     new_player = Player(id=player_id, full_name=full_name, team_id=team_id)
     session.add(new_player)
     i += 1
-    session.commit()
+    try :
+        session.commit()
+    except :
+        continue

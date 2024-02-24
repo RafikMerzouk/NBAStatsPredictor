@@ -1,27 +1,34 @@
 version: '3'
 services:
-  db:
-    image: postgres
-    environment:
-      POSTGRES_DB: nbastats
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-  nba_stats:
-    build: .
-    volumes:
-      - ./:/app/
-    command: python app.py
-    environment:
-      POSTGRES_DB: nbastats
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_HOST: db
-    depends_on:
-      - db
+  # db:
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_DB: nbastats
+  #     POSTGRES_USER: admin
+  #     POSTGRES_PASSWORD: admin
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  # nba_stats:
+  #   build: .
+  #   volumes:
+  #     - ./:/app/
+  #   command: python app.py
+  #   environment:
+  #     POSTGRES_DB: nbastats
+  #     POSTGRES_USER: admin
+  #     POSTGRES_PASSWORD: admin
+  #     POSTGRES_HOST: db
+  #   depends_on:
+  #     - db
+  nba-analysis:  # Nom du service personnalisé
+      build: ./analysis
+      restart: always
+      ports:
+        - "8888:8888"
+      volumes:
+        - ./analysis:/mnt
 
 volumes:
   postgres_data:
